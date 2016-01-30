@@ -7,6 +7,7 @@ const privateData = new WeakMap();
 function end(req) {
 	return new Promise((resolve, reject) => {
 		req.end((err, res) => {
+			/* istanbul ignore if */
 			if (err) {
 				reject(err);
 			} else {
@@ -32,12 +33,21 @@ class Client {
 			key: ''
 		});
 	}
-	
+	/**
+	 * [ttl 设置ttl]
+	 * @param  {[type]} v [description]
+	 * @return {[type]}   [description]
+	 */
 	ttl(v) {
 		privateData.get(this).ttl = v;
 		return this;
 	}
 
+	/**
+	 * [set 设置value的值]
+	 * @param {[type]} k [description]
+	 * @param {[type]} v [description]
+	 */
 	set(k, v) {
 		const config = privateData.get(this).config;
 		if (_.isObject(k)) {
@@ -48,32 +58,35 @@ class Client {
 		return this;
 	}
 
+	/**
+	 * [list description]
+	 * @return {[type]} [description]
+	 */
 	list() {
-		const tags = privateData.get(this).tags;
+		const tags = _.flattenDeep(_.toArray(arguments));
 		const data = privateData.get(this);
 		const options = data.options;
 		const url = urlJoin(this._getUrl(options), options.key);
-		const filter = (arr) => {
-			const result = [];
-			_.forEach(arr, tmp => {
-				let exists = true;
-				_.forEach(tags, tag => {
-					if (exists && ~_.indexOf(tmp.tags, tag)) {
-						exists = false;
-					}
-				});
-				if (exists) {
-					result.push(tmp.config);
+		const filter = (node) => {
+			let exists = true;
+			_.forEach(tags, tag => {
+				if (exists && _.indexOf(node.value.tags, tag) === -1) {
+					exists = false;
 				}
 			});
+			return exists;
 		};
 
 		return end(request.get(url)).then(res => {
 			const nodes = _.get(res, 'body.node.nodes');
-			const arr = _.map(nodes, node => {
-				return JSON.parse(node.value);
-			}); 
-			return filter(arr);
+			_.forEach(nodes, node => {
+				node.value = JSON.parse(node.value);
+			});
+			if (tags.length) {
+				return _.filter(nodes, filter);
+			} else {
+				return nodes;
+			}
 		});
 	}
 
@@ -81,6 +94,7 @@ class Client {
 		const tags = privateData.get(this).tags;
 		const arr = _.flattenDeep(_.toArray(arguments));
 		_.forEach(arr, tag => {
+			/* istanbul ignore else */
 			if (!~_.indexOf(tags, tag)) {
 				tags.push(tag);
 			}
@@ -99,15 +113,18 @@ class Client {
 		const sendData = {
 			value: JSON.stringify(value)
 		};
+		/* istanbul ignore else */
 		if (data.ttl) {
 			sendData.ttl = data.ttl;
 		}
-		
+
 		const req = request.put(url)
 			.type('form')
 			.send(sendData);
 		return end(req).then(res => {
-			return _.get(res, 'body.node');
+			const node =  _.get(res, 'body.node');
+			node.value = JSON.parse(node.value);
+			return node;
 		});
 	}
 
@@ -125,6 +142,7 @@ class Client {
 		const sendData = {
 			value: JSON.stringify(value)
 		};
+		/* istanbul ignore else */
 		if (data.ttl) {
 			sendData.ttl = data.ttl;
 		}
@@ -135,6 +153,7 @@ class Client {
 			.send(sendData);
 		return end(req).then(res => {
 			const node =  _.get(res, 'body.node');
+			node.value = JSON.parse(node.value);
 			data.key = node.key;
 			return node;
 		});
