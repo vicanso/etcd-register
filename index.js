@@ -66,8 +66,6 @@ class Client {
 					result.push(tmp.config);
 				}
 			});
-
-			console.dir(result);
 		};
 
 		return end(request.get(url)).then(res => {
@@ -94,12 +92,20 @@ class Client {
 	refresh() {
 		const data = privateData.get(this);
 		const url = urlJoin(this._getUrl(data.options), data.key);
+		const value = {
+			config: data.config,
+			tags: data.tags
+		};
+		const sendData = {
+			value: JSON.stringify(value)
+		};
+		if (data.ttl) {
+			sendData.ttl = data.ttl;
+		}
+		
 		const req = request.put(url)
 			.type('form')
-			.send({
-				ttl: data.ttl
-			});
-		console.dir(data.ttl);
+			.send(sendData);
 		return end(req).then(res => {
 			return _.get(res, 'body.node');
 		});
@@ -134,4 +140,5 @@ class Client {
 		});
 	}
 }
-module.export = Client;
+
+module.exports = Client;

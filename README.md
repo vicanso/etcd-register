@@ -20,3 +20,7 @@ client.ttl(600);
 client.addTag('http-backend', 'app-albi', 'http-ping');
 client.register();
 ```
+
+## License
+
+MIT
