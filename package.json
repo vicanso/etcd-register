@@ -1,6 +1,6 @@
 {
   "name": "micro-service",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "register service by etcd",
   "main": "index.js",
   "author": "",
