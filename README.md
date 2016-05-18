@@ -1,5 +1,9 @@
 # micro-service
 
+[![Build Status](https://travis-ci.org/vicanso/micro-service.svg?branch=master)](https://travis-ci.org/vicanso/micro-service)
+[![npm](http://img.shields.io/npm/v/micro-service.svg?style=flat-square)](https://www.npmjs.org/package/micro-service)
+[![Github Releases](https://img.shields.io/npm/dm/micro-service.svg?style=flat-square)](https://github.com/vicanso/micro-service)
+
 ## API
 
 ### register
