@@ -1,16 +1,16 @@
-# micro-service
+# etcd-register
 
-[![Build Status](https://travis-ci.org/vicanso/micro-service.svg?branch=master)](https://travis-ci.org/vicanso/micro-service)
-[![npm](http://img.shields.io/npm/v/micro-service.svg?style=flat-square)](https://www.npmjs.org/package/micro-service)
-[![Github Releases](https://img.shields.io/npm/dm/micro-service.svg?style=flat-square)](https://github.com/vicanso/micro-service)
+[![Build Status](https://travis-ci.org/vicanso/etcd-register.svg?branch=master)](https://travis-ci.org/vicanso/etcd-register)
+[![npm](http://img.shields.io/npm/v/etcd-register.svg?style=flat-square)](https://www.npmjs.org/package/etcd-register)
+[![Github Releases](https://img.shields.io/npm/dm/etcd-register.svg?style=flat-square)](https://github.com/vicanso/etcd-register)
 
 ## API
 
 ### register
 
 ```js
-const MicroService = require('micro-service');
-const client = new MicroService({
+const EtcdRegister = require('etcd-register');
+const client = new EtcdRegister({
 	key: 'backend',
 	host: '127.0.0.1',
 	port: 2379
@@ -30,8 +30,8 @@ client.register();
 ### list
 
 ```js
-const MicroService = require('micro-service');
-const client = new MicroService({
+const EtcdRegister = require('etcd-register');
+const client = new EtcdRegister({
 	key: 'backend',
 	host: '127.0.0.1',
 	port: 2379
@@ -44,8 +44,8 @@ client.list('backend:http').then(data => {
 ### refresh
 
 ```js
-const MicroService = require('micro-service');
-const client = new MicroService({
+const EtcdRegister = require('etcd-register');
+const client = new EtcdRegister({
 	key: 'backend',
 	host: '127.0.0.1',
 	port: 2379

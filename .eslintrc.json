@@ -1,10 +1,6 @@
 {
   "extends": "airbnb/base",
   "rules": {
-    "strict": 0,
-    "no-console": 0
-  },
-  "globals": {
-    "localRequire": true
+    "strict": 0
   }
 }

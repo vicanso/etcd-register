@@ -2,16 +2,16 @@
 const assert = require('assert');
 const Client = require('..');
 
-describe('micro-service', () => {
+describe('etcd-register', () => {
   const client = new Client('http://127.0.0.1:2379/v2', {
-    key: 'micro-service-test'
+    key: 'etcd-register-test'
   });
   const serviceConfig = {
     port: 80,
     ip: '127.0.0.1',
     prefix: '/test'
   };
-  const serviceTags = ['backend:http', 'env:test', 'micro-service:test'];
+  const serviceTags = ['backend:http', 'env:test', 'etcd-register:test'];
   client.set(serviceConfig);
   client.set('host', 'micro.com');
   client.addTag(serviceTags);

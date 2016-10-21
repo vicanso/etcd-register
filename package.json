@@ -1,35 +1,38 @@
 {
-  "name": "micro-service",
-  "version": "0.0.4",
-  "description": "register service by etcd",
+  "name": "etcd-register",
+  "version": "1.0.0",
+  "description": "register service config to etcd",
   "main": "index.js",
-  "author": "",
+  "author": "Tree Xie <vicansocanbico@gmail.com>",
   "scripts": {
     "test": "node ./node_modules/.bin/eslint ./index.js && node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/*.js --"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vicanso/micro-service.git"
+    "url": "https://github.com/vicanso/etcd-register.git"
   },
   "keywords": [
     "etcd",
-    "micro-service"
+    "register",
+    "etcd-register"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vicanso/micro-service/issues"
+    "url": "https://github.com/vicanso/etcd-register/issues"
   },
-  "homepage": "https://github.com/vicanso/micro-service#readme",
+  "homepage": "https://github.com/vicanso/etcd-register#readme",
   "dependencies": {
-    "lodash": "^4.12.0",
-    "superagent": "^2.0.0-alpha.2",
+    "lodash": "^4.16.4",
+    "superagent": "^2.3.0",
     "url-join": "1.1.0"
   },
   "devDependencies": {
-    "eslint": "^2.9.0",
-    "eslint-config-airbnb": "^9.0.1",
-    "eslint-plugin-import": "^1.7.0",
-    "istanbul": "^0.4.3",
-    "mocha": "^2.4.5"
+    "eslint": "^3.8.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^2.0.1",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.4.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.1.2"
   }
 }

@@ -1,7 +1,9 @@
 'use strict';
+
 const _ = require('lodash');
 const request = require('superagent');
 const urlJoin = require('url-join');
+
 const privateData = new WeakMap();
 
 class Client {
@@ -56,7 +58,7 @@ class Client {
     const url = urlJoin(this.getUrl(), options.key);
     const filter = (node) => {
       let exists = true;
-      _.forEach(tags, tag => {
+      _.forEach(tags, (tag) => {
         if (exists && _.indexOf(node.value.tags, tag) === -1) {
           exists = false;
         }
@@ -64,9 +66,9 @@ class Client {
       return exists;
     };
 
-    return request.get(url).then(res => {
+    return request.get(url).then((res) => {
       const nodes = _.get(res, 'body.node.nodes');
-      _.forEach(nodes, tmp => {
+      _.forEach(nodes, (tmp) => {
         const node = tmp;
         node.value = JSON.parse(node.value);
       });
@@ -80,9 +82,9 @@ class Client {
   addTag() {
     const tags = privateData.get(this).tags;
     const arr = _.flattenDeep(_.toArray(arguments));
-    _.forEach(arr, tag => {
+    _.forEach(arr, (tag) => {
       /* istanbul ignore else */
-      if (!~_.indexOf(tags, tag)) {
+      if (_.indexOf(tags, tag) === -1) {
         tags.push(tag);
       }
     });
@@ -108,7 +110,7 @@ class Client {
     return request.put(url)
       .type('form')
       .send(sendData)
-      .then(res => {
+      .then((res) => {
         const node = _.get(res, 'body.node');
         node.value = JSON.parse(node.value);
         return node;
@@ -138,7 +140,7 @@ class Client {
     return request.post(url)
       .type('form')
       .send(sendData)
-      .then(res => {
+      .then((res) => {
         const node = _.get(res, 'body.node');
         node.value = JSON.parse(node.value);
         data.key = node.key;
